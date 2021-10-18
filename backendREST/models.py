@@ -3,29 +3,30 @@ from django.db.models.fields import BooleanField
 
 # Create your models here.
 class User(models.Model):
-    id = models.IntegerField(unique=True)
+    id = models.IntegerField(unique=True, primary_key=True)
     name = models.CharField(max_length=20)
     email = models.CharField(max_length=20, unique=True)
-   
-    # items = a list of items
-    phoneNumber = models.IntegerField(max_length = 20)
-    # Picture (media file)
-    # Favorites [items]
+    phoneNumber = models.IntegerField()
+    #profile pic = media file - to be config later
 
 def __str__(self):
     return self.email
 
 
 class Item(models.Model):
-    id = models.IntegerField(unique=True)
+    id = models.IntegerField(unique=True, primary_key=True)
+    seller = models.ForeignKey(User, to_field="id", on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
     description = models.TextField(null=True, blank=True)
     price = models.IntegerField()
-    # seller = User
     sold = models.BooleanField(default=False)
     condition = models.CharField(max_length=20)
-    
-# def __str__(self):
-    # return self.id, self.title
+    #pic = media file - to be config later
 
-# class Category(models.Model):
+    def __str__(self):
+        return f"title: {self.title}, seller: {self.seller}"
+
+class Favorite(models.Model):
+    user = models.ForeignKey(User, to_field="id", on_delete=models.CASCADE)
+    items = models.ForeignKey(Item, to_field="id", on_delete=models.CASCADE)
+    

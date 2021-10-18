@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'rest_framework',
 
     #the app we made
+    'backendREST',
 ]
 
 MIDDLEWARE = [
