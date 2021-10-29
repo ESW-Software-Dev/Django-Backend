@@ -9,8 +9,8 @@ class User(models.Model):
     phoneNumber = models.IntegerField()
     #profile pic = media file - to be config later
 
-def __str__(self):
-    return self.email
+    def __str__(self):
+        return self.email
 
 
 class Item(models.Model):
@@ -27,6 +27,10 @@ class Item(models.Model):
         return f"title: {self.title}, seller: {self.seller}"
 
 class Favorite(models.Model):
+    id = models.IntegerField(unique=True, primary_key=True)
     user = models.ForeignKey(User, to_field="id", on_delete=models.CASCADE)
-    items = models.ForeignKey(Item, to_field="id", on_delete=models.CASCADE)
+    item = models.ForeignKey(Item, to_field="id", on_delete=models.CASCADE)
+
+    def __str__(self):
+        return f"user: {self.user}, item: {self.item}"
     
