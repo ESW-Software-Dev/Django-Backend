@@ -25,10 +25,14 @@ class ItemSerializer(serializers.HyperlinkedModelSerializer):
       'condition'
     )
 
-class FavoriteSerializer(serializers.HyperlinkedModelSerializer):
+class FavoriteSerializer(serializers.ModelSerializer):
+  #user = serializers.PrimaryKeyRelatedField(read_only=False, queryset= User.objects.all(), many=True)
+
   class Meta:
+    model = Favorite
     fields = (
-      'items'
+      'user',
+      'item'
     )
 
 
