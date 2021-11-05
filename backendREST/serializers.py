@@ -2,7 +2,7 @@ from rest_framework import serializers
 from .models import User, Item, Favorite
 
 
-class UserSerializer(serializers.HyperlinkedModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
   class Meta:
     model = User
     fields = (
@@ -12,7 +12,7 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
       'phoneNumber'
     )
 
-class ItemSerializer(serializers.HyperlinkedModelSerializer):
+class ItemSerializer(serializers.ModelSerializer):
   class Meta:
     model = Item
     fields = (

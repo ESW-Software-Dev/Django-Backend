@@ -14,6 +14,72 @@ from .serializers import UserSerializer, ItemSerializer, FavoriteSerializer
 import uuid
 # Create your views here.
 
+@api_view(['POST'])
+def createNewItem(request):
+  """
+  creates a user's new item
+  """
+  newItem = ItemSerializer(data=request.data)
+  if newItem.is_valid():
+    newItem.save()
+    return Response(newItem.data, status=status.HTTP_201_CREATED)
+
+  fail = {
+    "item" : "item is not valid"
+  }
+  return JsonResponse(fail)
+
+
+@api_view(['DELETE'])
+def deleteItem(request, itemid):
+  """
+  deletes a user's item
+  """
+  try:
+    item = ItemSerializer(Item.objects.get(id=itemid))
+    Item.objects.get(id=itemid).delete()
+    return Response(item.data)
+
+  except Item.DoesNotExist:
+    fail = {
+      "item":"item does not exist"
+    }
+    return JsonResponse(fail)
+
+
+
+@api_view(['POST'])
+def createNewUser(request):
+  """
+  creates a new user
+  """
+  newUser = UserSerializer(data=request.data)
+  if newUser.is_valid():
+    newUser.save()
+    return Response(newUser.data, status=status.HTTP_201_CREATED)
+
+  fail = {
+    "user" : "user is not valid"
+  }
+  return JsonResponse(fail)
+
+@api_view(['GET'])
+def getUserInfo(request):
+  """
+  Returns a dictionary of all the user profile info including their items
+  """
+  try:
+    user = UserSerializer(User.objects.get(id=request.data.get("id")))
+    return Response(user.data)
+    
+
+  except User.DoesNotExist:
+    fail = {
+      "user": "user does not exist"
+    }
+    return JsonResponse(fail)
+
+    
 
 
 @api_view(['GET'])
