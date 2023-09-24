@@ -48,7 +48,7 @@ def deleteItem(request, itemid):
         return JsonResponse(fail)
 
 
-@api_view(['POST'])
+@api_view(['POST','GET'])
 # creates new data on the server
 def createNewUser(request):
     """
